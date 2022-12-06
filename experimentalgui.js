@@ -183,37 +183,23 @@ details summary ~ * {
     let cheats = {
         global: {
             'Get Daily Rewards': () => {
-                fetch("https://api.blooket.com/api/users", { credentials: "include" }).then(x => x.json()).then(x => {
-                    getValues().then(async e => {
-                        fetch("https://api.blooket.com/api/users/add-rewards", {
-                            method: "put",
-                            credentials: "include",
-                            headers: {
-                                "content-type": "application/json",
-                                "X-Blooket-Build": e.blooketBuild
-                            },
-                            body: await encodeValues({
-                                name: x.name,
-                                addedTokens: 250,
-                                addedXp: 300
-                            }, e.secret)
-                        });
-                        fetch("https://api.blooket.com/api/users/add-rewards", {
-                            method: "put",
-                            credentials: "include",
-                            headers: {
-                                "content-type": "application/json",
-                                "X-Blooket-Build": e.blooketBuild
-                            },
-                            body: await encodeValues({
-                                name: x.name,
-                                addedTokens: 250,
-                                addedXp: 300
-                            }, e.secret)
-                        }).then(() => alert('Added daily rewawrds!')).catch(() => alert('There was an error when adding rewards!'));;
-                    }).catch(() => alert('There was an error encoding requests!'));
-                }).catch(() => alert('There was an error getting username!'));
-            },
+
+
+function reactEventHandler() {
+    let react = Object.values(document.querySelector("#body"))[0].stateNode;
+    return react[Object.keys(react).filter(a => a.includes("reactInternalInstance"))].return.stateNode;
+}
+
+(() => {
+    let n = document.createElement('iframe');
+    document.body.append(n);
+    window.alert = n.contentWindow.alert.bind(window);
+    n.remove();
+})();
+
+reactEventHandler().state.game.instance.events._events['game-over'].map(a => a.fn = () => {});
+alert("Enabled invincibility.")
+            };
             'Spoof Blooks': () => {
                 if (!window.location.pathname.split('/').includes('lobby')) return alert('You must be in a game lobby! (e.g. https://www.blooket.com/play/lobby)');
                 reactHandler().stateNode.setState({ lockedBlooks: [], takenBlooks: [] });
@@ -330,6 +316,7 @@ details summary ~ * {
                 reactHandler().stateNode.nextGuest();
             }
         },
+        
         crypto: {
             'Auto Hack': () => { autoPassword = !autoPassword },
             'Set Crypto': () => {
